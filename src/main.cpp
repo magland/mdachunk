@@ -7,6 +7,7 @@
 #include "get_command_line_params.h"
 #include "diskreadmda.h"
 #include "mda.h"
+#include <QDateTime>
 #include <QDir>
 #include <QString>
 #include <QStringList>
@@ -155,15 +156,32 @@ bool parse_size_string(const QString &str,long &s1,long &s2,long &s3) {
 	return ((s1>0)&&(s2>0)&&(s3>0));
 }
 
+QString get_file_info(const QString &fname) {
+    QString format="yyyy-MM-dd.hh.mm.ss.zzz";
+    QString created=QFileInfo(fname).created().toString(format);
+    QString modified=QFileInfo(fname).lastModified().toString(format);
+    qint64 size=QFileInfo(fname).size();
+    return QString("created=%1;modified=%2;size=%3").arg(created).arg(modified).arg(size);
+}
+
+bool is_out_of_date(const QString &sha1_fname,const QString &fname) {
+    QString str=read_text_file(sha1_fname).split("\n").value(1); //the second line
+    if (str.isEmpty()) return true;
+    return (str!=get_file_info(fname));
+}
+
 QString get_sha1_code(const QString &fname) {
 	QString sha1_fname=fname+".sha1";
 	QString sha1;
-	if (!QFile::exists(sha1_fname)) {
+    if ((!QFile::exists(sha1_fname))||(is_out_of_date(sha1_fname,fname))) {
 		QString cmd=QString("sha1sum %1 > %2").arg(fname).arg(sha1_fname);
 		if (system(cmd.toLatin1().data())!=0) {
 			printf("Problem in system call: %s\n",cmd.toLatin1().data());
 			return "";
 		}
+        QString content=read_text_file(sha1_fname);
+        content=content.trimmed()+"\n"+get_file_info(fname);
+        write_text_file(sha1_fname,content);
 	}
 	if (QFile::exists(sha1_fname)) {
 		sha1=read_text_file(sha1_fname).trimmed();
