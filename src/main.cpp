@@ -101,7 +101,9 @@ int main(int argc, char *argv[])
 				return -1;
 			}
 			DiskReadMda check(fname+".tmp");
-			if ((check.N1()!=s1)||(check.N2()!=s2)||(check.N3()!=s3)) {
+            if (s2==0) s2=1;
+            if (s3==0) s3=1;
+            if ((check.N1()!=s1)||(check.N2()!=s2)||(check.N3()!=s3)) {
 				printf("Unexpected dimensions of output file: %ld,%ld,%ld\n",check.N1(),check.N2(),check.N3());
 				QFile::remove(fname+".tmp");
 				return -1;
@@ -113,6 +115,8 @@ int main(int argc, char *argv[])
 		}
 		else {
 			DiskReadMda check(fname);
+            if (s2==0) s2=1;
+            if (s3==0) s3=1;
 			if ((check.N1()!=s1)||(check.N2()!=s2)||(check.N3()!=s3)) {
 				printf("Unexpected dimensions of existing output file: %ld,%ld,%ld\n",check.N1(),check.N2(),check.N3());
 				QFile::remove(fname);
