@@ -153,7 +153,7 @@ bool parse_size_string(const QString &str,long &s1,long &s2,long &s3) {
 	s1=vals.value(0,"1").toLong();
 	s2=vals.value(1,"1").toLong();
 	s3=vals.value(2,"1").toLong();
-	return ((s1>0)&&(s2>0)&&(s3>0));
+    return (s1>0);
 }
 
 QString get_file_info(const QString &fname) {
