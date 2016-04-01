@@ -144,6 +144,9 @@ bool DiskReadMda::readChunk(Mda &X, long i, long size) const
 
 bool DiskReadMda::readChunk(Mda &X, long i1, long i2, long size1, long size2) const
 {
+    if (size2==0) {
+        return readChunk(X,i1,size1);
+    }
 	if (d->m_use_memory_mda) {
 		d->m_memory_mda.getChunk(X,i1,i2,size1,size2);
 		return true;
@@ -178,6 +181,14 @@ bool DiskReadMda::readChunk(Mda &X, long i1, long i2, long size1, long size2) co
 
 bool DiskReadMda::readChunk(Mda &X, long i1, long i2, long i3, long size1, long size2, long size3) const
 {
+    if (size3==0) {
+        if (size2==0) {
+            return readChunk(X,i1,size1);
+        }
+        else {
+            return readChunk(X,i1,i2,size1,size2);
+        }
+    }
 	if ((size3==1)&&(this->N3()==1)&&(i3==0)) {
 		//do it this way so we don't get the "problem reading 3d chunk" error
 		return readChunk(X,i1,i2,size1,size2);
