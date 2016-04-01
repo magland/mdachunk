@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core
+QT       += core network
 
 QT       -= gui
 
@@ -23,6 +23,7 @@ SOURCES += main.cpp \
     mda/diskwritemda.cpp \
     mda/mda.cpp \
     mda/mdaio.cpp \
+    mda/mdaclient.cpp \
     mda/usagetracking.cpp \
     utils/get_command_line_params.cpp \
     utils/textfile.cpp
@@ -33,6 +34,7 @@ HEADERS += \
     mda/diskwritemda.h \
     mda/mda.h \
     mda/mdaio.h \
+    mda/mdaclient.h \
     mda/usagetracking.h \
     utils/get_command_line_params.h \
     utils/textfile.h
