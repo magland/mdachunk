@@ -136,8 +136,7 @@ long DiskReadMda::N6() const
 
 long DiskReadMda::totalSize() const
 {
-    if (!d->open_file_if_needed()) return 0;
-    return d->m_mda_header_total_size;
+    return d->total_size();
 }
 
 bool DiskReadMda::readChunk(Mda &X, long i, long size) const
@@ -340,7 +339,7 @@ long DiskReadMdaPrivate::total_size()
 {
     if (m_use_memory_mda) return m_memory_mda.totalSize();
     if (m_use_mda_client) return m_mda_client.totalSize();
-
+    return m_mda_header_total_size;
 }
 
 void diskreadmda_unit_test()
