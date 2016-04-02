@@ -29,11 +29,11 @@ public:
     long total_size();
 };
 
-DiskReadMda::DiskReadMda(const QString &path) {
+DiskReadMda::DiskReadMda(const QString &path_or_url) {
 	d=new DiskReadMdaPrivate;
 	d->q=this;
 	d->do_construct();
-	if (!path.isEmpty()) this->setPath(path);
+	if (!path_or_url.isEmpty()) this->setPath(path_or_url);
 }
 
 DiskReadMda::DiskReadMda(const DiskReadMda &other)
