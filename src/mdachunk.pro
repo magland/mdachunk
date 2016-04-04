@@ -17,24 +17,35 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-
+INCLUDEPATH += ../../mountainlab/mountainsort/src/mda
+DEPENDPATH += ../../mountainlab/mountainsort/src/mda
+VPATH += ../../mountainlab/mountainsort/src/mda
 SOURCES += main.cpp \
-    mda/diskreadmda.cpp \
-    mda/diskwritemda.cpp \
-    mda/mda.cpp \
-    mda/mdaio.cpp \
-    mda/mdaclient.cpp \
-    mda/usagetracking.cpp \
+    diskreadmda.cpp \
+    diskwritemda.cpp \
+    mda.cpp \
+    mdaio.cpp \
+    mdaclient.cpp \
+    remotereadmda.cpp \
+    usagetracking.cpp \
     utils/get_command_line_params.cpp \
     utils/textfile.cpp
-
-INCLUDEPATH += mda utils
+INCLUDEPATH += utils
 HEADERS += \
-    mda/diskreadmda.h \
-    mda/diskwritemda.h \
-    mda/mda.h \
-    mda/mdaio.h \
-    mda/mdaclient.h \
-    mda/usagetracking.h \
+    diskreadmda.h \
+    diskwritemda.h \
+    mda.h \
+    mdaio.h \
+    mdaclient.h \
+    usagetracking.h \
+    remotereadmda.h \
     utils/get_command_line_params.h \
     utils/textfile.h
+
+INCLUDEPATH += ../../mountainlab/mountainsort/src/utils
+DEPENDPATH += ../../mountainlab/mountainsort/src/utils
+VPATH += ../../mountainlab/mountainsort/src/utils
+HEADERS += msmisc.h
+SOURCES += msmisc.cpp
+
+
